@@ -85,22 +85,27 @@ exports.createPages = ({ actions, graphql }) => {
         if (result.errors) {
           reject(result.errors)
         }
-       
-        const pages = result.data.nodeRecipes.edges; 
+        console.log("PAGES");
+        console.log(result.data.Drupal.nodeRecipes);
+        const pages = result.data.Drupal.nodeRecipes.edges;
 
         
         //result.data.allNodeHorse.edges.forEach(({ node }, index) => {
         pages.forEach(({ node }, index) => {
           //console.log(node);
-          const page_path = (node.path && node.path.alias) ? node.path.alias : '/node/' + node.drupal_id; 
-         
+	        console.log("PATH: "); 
+	        console.log(node.path); 
+          //const page_path = (node.path && node.path.alias) ? node.path.alias : '/node/' + node.drupal_id; 
+          const page_path = node.path
+          console.log(page_path); 
 
           createPage({
-            path: `/recipes/${node.id}`,
+            path: `${page_path}`,
           
             component: pageTemplate,
             context: {
-              recipe: node,
+              nid: node.id,  
+              data: node, 
             },
           })
         })
