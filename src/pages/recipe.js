@@ -1,24 +1,47 @@
-import * as React from "react"
-import { Link, graphql } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import { graphql } from 'gatsby'
+import React from 'react'
 
-function Recipe({ pageContext }) {
-    const { recipe } = pageContext
-    return (
+const pageTemplate = props => {
+
+  const data = {
+     nodeFood:  props.pageContext.data
+   }
+ 
+   console.log(data);
+ 
+ 
+   return (
       <div>
-        <h1>{recipe.title}</h1>
-        <h2>Category: {recipe.recipeCategory.name}</h2>
-        <h2>Tags: {recipe.tags.name}</h2>
-        <p>{recipe.summary.value}</p>
-        <img src={recipe.mediaImage.mediaImage.url}></img>
-        <h2>Preparation Time: {recipe.preparationTime}</h2>
-        <h2>Cooking Time: {recipe.cookingTime}</h2>
-        <h2>Number of Servings: {recipe.numberOfServings}</h2>
-        <h2>Difficulty: {recipe.difficulty}</h2>
-        <div>Ingredients: {recipe.ingredients}</div>
-        <p>Instructions: {recipe.recipeInstruction.value}</p>
+        <h2>{data.nodeFood.title}</h2>
+        <h2>Category: {data.nodeFood.recipeCategory.name}</h2>
+        <h2>Tags: {data.nodeFood.tags.name}</h2>
+        <p>{data.nodeFood.summary.value}</p>
+        <img src={data.nodeFood.mediaImage.mediaImage.url}></img>
+        <h2>Preparation Time: {data.nodeFood.preparationTime}</h2>
+        <h2>Cooking Time: {data.nodeFood.cookingTime}</h2>
+        <h2>Number of Servings: {data.nodeFood.numberOfServings}</h2>
+        <h2>Difficulty: {data.nodeFood.difficulty}</h2>
+        <div>Ingredients: {data.nodeFood.ingredients}</div>
+        <p>Instructions: {data.nodeFood.recipeInstruction.value}</p>
       </div>
-    )
-  }
-
-export default Recipe
+     )}
+ 
+ 
+ export default pageTemplate 
+ /*
+ export const query = graphql`
+ query MyQuery($nid: string) {
+   Drupal {
+        nodeRecipe(id: { eq: $nid } ) {
+                   changed
+                   id
+                   cookingTime
+                   created
+                   path
+                   status
+                   title
+           }
+   }
+ }
+ `
+ */
